@@ -2,37 +2,67 @@ import java.util.Scanner;
 
 public class notFibbonacci {
     public static void main(String[] args) {
-        //Use scanner to input how many terms of the notFib should return
         Scanner scanner = new Scanner(System.in);
+
         System.out.print("Enter the number of terms");
         int terms = scanner.nextInt();
-        if (terms <= 0) {
-            System.out.println("Need to be greater than 0 to generate.");
-            return;
-        }
-        long[] notFibArray = notFib(terms);
 
-        // Print the array with the sequence
-        for (long num : notFibArray) {
-            System.out.print(num + ",");
+        long[] sequence = generateNotFibonacci(terms);
+        for (long num : sequence) {
+            System.out.print(num + " ");
         }
+        System.out.println();
 
+        System.out.print("Enter a number of its position: ");
+        long number = scanner.nextLong();
+
+        int position = checkOutput(number);
+        System.out.println("Position: " + position);
     }
 
-
-    public static long[] notFib(int terms) {
+    public static long[] generateNotFibonacci(int terms) {
         long[] sequence = new long[terms];
-        // First number always 0 which is our base cases
+
+        // Base cases
         sequence[0] = 0;
         if (terms > 1) {
             sequence[1] = 1;
         }
 
-        // Using the formula to generate the next terms iteratively
-        // Index i start at 2 because we need to use the base case (sequence 0 and 1 to calculate
         for (int i = 2; i < terms; i++) {
             sequence[i] = (3 * sequence[i - 1]) + (2 * sequence[i - 2]);
         }
+
         return sequence;
     }
+
+    public static long notFib(int n) {
+        if (n == 0) {
+            return 0;
+        } else if (n == 1) {
+            return 1;
+        } else {
+            return (3 * notFib(n - 1)) + (2 * notFib(n - 2));
+        }
+    }
+
+    public static int checkOutput(long pos) {
+        int i = 0;
+
+        while (true) {
+            long a = notFib(i);
+
+            if (a >= pos) {
+                if (a == pos) {
+                    return i + 1;
+                } else {
+                    return i;
+                }
+            }
+
+            i++;
+        }
+    }
 }
+
+
